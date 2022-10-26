@@ -21,6 +21,20 @@ namespace CashRegisterTest
 		}
 
         [Fact]
+        public void Can_call_function_once()
+        {
+            //given
+            var printer = new Mock<Printer>();
+            var cashRegister = new CashRegister(printer.Object);
+            var purchase = new Purchase();
+            //when
+            cashRegister.Process(purchase);
+            //then
+            //verify that cashRegister.process will trigger print
+            printer.Verify(p => p.Print(It.IsAny<string>()));
+        }
+
+        [Fact]
         public void Should_return_given_context()
         {
 			//given
