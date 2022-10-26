@@ -35,6 +35,20 @@ namespace CashRegisterTest
         }
 
         [Fact]
+        public void Should_throw_exception()
+        {
+            //given
+            var printer = new Mock<Printer>();
+            var cashRegister = new CashRegister(printer.Object);
+            var purchase = new Purchase();
+            printer.Setup(_ => _.Print(It.IsAny<string>())).Throws(new PrinterOutOfPaperException());
+            //when
+            //then
+            //verify that cashRegister.process will trigger print
+            Assert.Throws<HardwareException>(() => cashRegister.Process(purchase));
+        }
+
+        [Fact]
         public void Should_return_given_context()
         {
 			//given
